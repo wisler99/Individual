@@ -6,9 +6,12 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class PlayerMove : MonoBehaviour
 {
+    [SerializeField] GameObject _inventory;
     public int _mouseSpeed;
     public float _jumpForce;
     public float _charcterSpeed;
+
+    
 
     Rigidbody rb;
 
@@ -24,6 +27,10 @@ public class PlayerMove : MonoBehaviour
         Move();
         Jump();
         MouseMove();
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            _inventory.GetComponent<Inventory>().InventoryOpen();
+        }
 
     }
     void MouseMove()
@@ -31,7 +38,7 @@ public class PlayerMove : MonoBehaviour
         mouseY += Input.GetAxis("Mouse Y") * _mouseSpeed;
         mouseY = Mathf.Clamp(mouseY, -55.0f, 55.0f);
         mouseX += Input.GetAxis("Mouse X") * _mouseSpeed;
-        transform.eulerAngles = new Vector3(mouseY, mouseX, 0);
+        transform.eulerAngles = new Vector3(-mouseY, mouseX, 0);
     }
 
     void Move()
