@@ -4,9 +4,10 @@ using TMPro;
 using UnityEngine;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
     [SerializeField] GameObject _inventory;
+    [SerializeField] GameObject _AddItemExplain;
     public int _mouseSpeed;
     public float _jumpForce;
     public float _charcterSpeed;
@@ -31,8 +32,10 @@ public class PlayerMove : MonoBehaviour
         {
             _inventory.GetComponent<Inventory>().InventoryOpen();
         }
+        CheckItem();
 
     }
+    #region 플레이어 움직임
     void MouseMove()
     {
         mouseY += Input.GetAxis("Mouse Y") * _mouseSpeed;
@@ -60,5 +63,25 @@ public class PlayerMove : MonoBehaviour
             rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
     }
+    #endregion
+
+    #region 아이템 회득
+
+    void CheckItem()
+    {
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, transform.forward, Color.red, 5f);
+        if(Physics.Raycast(transform.position , transform.forward, out hit, 3))
+        {
+            if(hit.transform.tag == "Item")
+            {
+                Debug.Log("Item");
+                _AddItemExplain.GetComponent<AddItemUI>().AddItemExplain(true);
+                
+            }
+        }
+    }
+
+    #endregion
 
 }

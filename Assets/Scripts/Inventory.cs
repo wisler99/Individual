@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
+    List<GameObject> _inventory = new List<GameObject>();
     public Image _inventoryImage;
     private void Start()
     {
         gameObject.SetActive(false);
     }
-
-
-
+    
     public void InventoryOpen()
     {
         if (gameObject.activeSelf == false) gameObject.SetActive(true);
@@ -21,6 +20,4 @@ public class Inventory : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-
-
 }
