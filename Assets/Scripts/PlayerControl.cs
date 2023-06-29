@@ -75,11 +75,22 @@ public class PlayerControl : MonoBehaviour
         {
             if(hit.transform.tag == "Item")
             {
-                Debug.Log("Item");
-                _AddItemExplain.GetComponent<AddItemUI>().AddItemExplain(true);
-                
+                _AddItemExplain.GetComponent<CheckItemUI>().AddItemExplain(true);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    //인벤토리에 넣는 함수
+                }
             }
         }
+        else
+        {
+            _AddItemExplain.GetComponent<CheckItemUI>().AddItemExplain(false);
+        }
+    }
+
+    void AddItem()
+    {
+
     }
 
     #endregion

@@ -9,13 +9,15 @@ public class Slot : MonoBehaviour
     //Item _item; // 회득한 아이템 정보
     //Text _textCount; // 총 아이템 갯수 텍스트에 출력
     //public int _count; // 총 아이템 갯수 저장
-    //Image _itemImage; // 아이템 이미지
+    //Image _slotItemImage; // 아이템 이미지
+    //int _itemID;
 
-    //void AddItem(Item item, int count = 1) // 아이템을 회득했을때
+    //void AddItem(Item _addItem , int _addItemCount)
     //{
-    //    _item = item;
-    //    _count += count;
-    //    _textCount.text = "X " + _count; // 총 아이템 갯수 텍스트에 출력
+    //    _count += _addItemCount;
+    //    _textCount.text= _count.ToString();
+    //    _slotItemImage = _addItem.GetComponent<Image>();
+    //    _itemID = _addItem
 
     //}
 
