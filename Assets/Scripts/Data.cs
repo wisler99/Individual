@@ -15,7 +15,6 @@ public class Data : MonoBehaviour
         _itemTable = new ItemDataTable();
         _itemTable._itemTable = new List<ItemData>();
         RoadItemTable();
-
     }
     void Update()
     {
@@ -34,7 +33,6 @@ public class Data : MonoBehaviour
             if (string.IsNullOrEmpty(json) == false) //  문자열이 비어있으면 true  뭔가 있으면 false
             {
                 _itemTable = JsonUtility.FromJson<ItemDataTable>(json);
-
             }
             else
             {
@@ -51,7 +49,7 @@ public class Data : MonoBehaviour
     {
         foreach(var itemID in _itemTable._itemTable)
         {
-            
+               
         }
     }
 

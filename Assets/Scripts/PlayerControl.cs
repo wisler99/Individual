@@ -79,6 +79,8 @@ public class PlayerControl : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     //인벤토리에 넣는 함수
+                    GetComponent<Inventory>().AddItem(hit.transform.GetComponent<Item>().GetItem());
+                    Debug.Log(hit.collider);
                 }
             }
         }
