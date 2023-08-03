@@ -5,21 +5,33 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    int _itemID;
     [SerializeField]Image _itmeImage;
     [SerializeField] Text _countText;
+
+    int _itemID;
+    public int itemID
+    {
+        get { return _itemID; }
+        set { _itemID = value; }
+    }
+
     int _itemCount;
+    public int itemCount
+    {
+        get { return _itemCount; }
+        set { _itemCount = value; }
+    }
 
     public void Init(ItemData data, Sprite spr)
     {
         _itemID = data._itemID;
         _itmeImage.sprite = spr;
-        SlotUpdate();
+        SlotUpdate(1);
     }
 
-    public void SlotUpdate()
+    public void SlotUpdate(int count)
     {
-        _itemCount++;
+        _itemCount += count;
         _countText.text = _itemCount.ToString();
     }
 }

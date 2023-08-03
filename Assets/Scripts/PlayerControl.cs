@@ -8,7 +8,8 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField] GameObject _inventory;
     [SerializeField] GameObject _AddItemExplain;
-    [SerializeField] GameObject _cam;
+    Transform _cam;
+
     public int _mouseSpeed;
     public float _jumpForce;
     public float _charcterSpeed;
@@ -30,7 +31,6 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             _inventory.GetComponent<Inventory>().InventoryOpen();
-            rb.velocity = Vector3.zero;
         }
         if (_inventory.activeSelf == true) return;
         Move();
@@ -58,10 +58,11 @@ public class PlayerControl : MonoBehaviour
 
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
-        Vector3 v3 = (transform.forward * y + transform.right * x) * 4;
-        Rigidbody rig = GetComponent<Rigidbody>();
-
-
+        Vector3 v3 = (transform.forward * y + transform.right * x) * Time.deltaTime * _charcterSpeed;
+        Vector3 playerMove = transform.position;
+        playerMove.x += x * Time.deltaTime * _charcterSpeed;
+        playerMove.y += y * Time.deltaTime * _charcterSpeed;
+        transform.position += v3;
     }
 
     void Jump()

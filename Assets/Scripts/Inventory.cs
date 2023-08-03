@@ -25,7 +25,11 @@ public class Inventory : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    public void InventoryUpdate()
+    {
 
+    }
+    #region ItemAdd
     public void AddItem(ItemData data)
     {
         bool check = false;
@@ -35,7 +39,7 @@ public class Inventory : MonoBehaviour
             if (data._itemID == _inventoryItemList[i]._itemID)
             {
                 // 아이템 인벤토리안에 같은 아이템이 있을경우 갯수를 눌려주는 함수
-                _itemSlots[i].GetComponent<Slot>().SlotUpdate();
+                _itemSlots[i].GetComponent<Slot>().SlotUpdate(1);
                 return;
             }
         }
@@ -48,16 +52,62 @@ public class Inventory : MonoBehaviour
         GameObject temp = Instantiate(_slot, _bag); // 아이템 슬롯 추가
         _itemSlots.Add(temp);
         temp.GetComponent<Slot>().Init(data, _dropItemImage);
-        Text tempText = temp.GetComponentInChildren<Text>();
-        tempText.text = _inventoryItemList[_inventoryItemList.Count - 1]._itemCount.ToString();
     }
-    public void InventoryUpdate()
-    {
 
-    }
-    public void InventoryDiable()
+    public bool CheckIDAndCount(int itemID, int needCount)  // 인벤토리안에 아이템이있는지 검사와 아이템 수량 검사
     {
-
+        for (int i = 0; i < _itemSlots.Count; i++)
+        {
+            if (_itemSlots[i].GetComponent<Slot>().itemID == itemID)
+            {
+                if (_itemSlots[i].GetComponent<Slot>().itemCount >= needCount)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
- }
+
+    public void UseMaterial(int itemID, int useCount)  // 아이템을 만들었을때 아이템 수량을 빼는 함수
+    {
+        for(int i = 0; i < _itemSlots.Count; i++)
+        {
+            if (_itemSlots[i].GetComponent<Slot>().itemID == itemID)
+            {
+                _itemSlots[i].GetComponent<Slot>().SlotUpdate(-useCount);
+            }
+        }
+    }
+
+    #endregion
+
+    #region MakingTab
+    // 제작대에 trigger가 호출될경우 아이템 제작 버튼 활성화
+    // 인벤토리를 검사
+    // 아이템이 충족이되면 버튼 색깔 활성화
+    // 아이템 재료가 부족할 시 버튼 색깔 비활성화
+    // 색깔이 활성화된 버튼을 누른경우 BAG로 아이템 생성
+    
+    public void MakeAxeBtn()
+    {
+        if(CheckIDAndCount(1,3) == true && CheckIDAndCount(2,1))
+        {
+            // 만든 아이템을 아이템 슬롯에 추가
+            // 사용한 아이템을 아이템리스트에서 카운트 다운
+            UseMaterial(1,1);
+            UseMaterial(2, 1);
+            Debug.Log("완성");
+        }
+        else
+        {
+            Debug.Log("아이템 수량이 부족합니다.");
+        }
+    }
+
+
+
+    #endregion
+
+}
 
