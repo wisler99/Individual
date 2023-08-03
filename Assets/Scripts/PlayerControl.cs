@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField] GameObject _inventory;
     [SerializeField] GameObject _AddItemExplain;
+    [SerializeField] GameObject _cam;
     public int _mouseSpeed;
     public float _jumpForce;
     public float _charcterSpeed;
@@ -25,33 +26,40 @@ public class PlayerControl : MonoBehaviour
     }
     private void Update()
     {
-        Move();
-        Jump();
-        MouseMove();
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             _inventory.GetComponent<Inventory>().InventoryOpen();
+            rb.velocity = Vector3.zero;
         }
+        if (_inventory.activeSelf == true) return;
+        Move();
+        Jump();
         CheckItem();
 
     }
     #region 플레이어 움직임
-    void MouseMove()
-    {
-        mouseY += Input.GetAxis("Mouse Y") * _mouseSpeed;
-        mouseY = Mathf.Clamp(mouseY, -55.0f, 55.0f);
-        mouseX += Input.GetAxis("Mouse X") * _mouseSpeed;
-        transform.eulerAngles = new Vector3(-mouseY, mouseX, 0);
-    }
 
+    public void SetCamera(Transform cam)
+    {
+        _cam = cam;
+    }
     void Move()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+        if (_cam == null)
+        {
+            GameObject camera = GameObject.FindGameObjectWithTag("Camera");
+            _cam = camera.transform;
+        }
 
-        Vector3 move = new Vector3(moveX, 0, moveZ);
 
-        transform.Translate((new Vector3(moveX, 0, moveZ) * _charcterSpeed) * Time.deltaTime);
+        Vector3 camRot = new Vector3(_cam.transform.forward.x, 0, _cam.transform.forward.z);
+        transform.rotation = Quaternion.LookRotation(camRot);
+
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
+        Vector3 v3 = (transform.forward * y + transform.right * x) * 4;
+        Rigidbody rig = GetComponent<Rigidbody>();
 
 
     }
@@ -79,8 +87,7 @@ public class PlayerControl : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     //인벤토리에 넣는 함수
-                    GetComponent<Inventory>().AddItem(hit.transform.GetComponent<Item>().GetItem());
-                    Debug.Log(hit.collider);
+                    _inventory.GetComponent<Inventory>().AddItem(hit.transform.GetComponent<Item>().GetItem());
                 }
             }
         }

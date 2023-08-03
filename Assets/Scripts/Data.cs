@@ -72,13 +72,12 @@ public class ItemDataTable
 public class ItemData
 {
     public ItemType _itemType;
-    public string _itemName;
     public int _itemID;
-    public ItemData(ItemType type, string name, int ID)
+    public int _itemCount;
+    public ItemData(int ID)
     {
-        _itemType = type;
-        _itemName = name;
         _itemID = ID;
+        _itemCount = 1;
     }
 }
 #endregion
