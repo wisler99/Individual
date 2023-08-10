@@ -32,8 +32,6 @@ public class Inventory : MonoBehaviour
     #region ItemAdd
     public void AddItem(ItemData data)
     {
-        bool check = false;
-
         for (int i = 0; i < _inventoryItemList.Count; i++)
         {
             if (data._itemID == _inventoryItemList[i]._itemID)
@@ -51,7 +49,7 @@ public class Inventory : MonoBehaviour
         _inventoryItemList.Add(_invenItemData); // 회득한 아이템 정보를 인벤토리 리스트 안에 넣어줌
         GameObject temp = Instantiate(_slot, _bag); // 아이템 슬롯 추가
         _itemSlots.Add(temp);
-        temp.GetComponent<Slot>().Init(data, _dropItemImage);
+        temp.GetComponent<Slot>().Init(data._itemID, _dropItemImage);
     }
 
     public bool CheckIDAndCount(int itemID, int needCount)  // 인벤토리안에 아이템이있는지 검사와 아이템 수량 검사
@@ -80,6 +78,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void AddCombineItem(int itemID)
+    {
+        Sprite _dropItemImage = Resources.Load<Sprite>("ItemImage/ItemID" + itemID); //  리소스 파일안에서 아이템아이디에 맞는 이미지 파일을 가져옴
+        ItemData _invenItemData = new ItemData(itemID);
+
+        _inventoryItemList.Add(_invenItemData); // 회득한 아이템 정보를 인벤토리 리스트 안에 넣어줌
+        GameObject temp = Instantiate(_slot, _bag); // 아이템 슬롯 추가
+        _itemSlots.Add(temp);
+        temp.GetComponent<Slot>().Init(itemID, _dropItemImage);
+    }
+
     #endregion
 
     #region MakingTab
@@ -89,14 +98,15 @@ public class Inventory : MonoBehaviour
     // 아이템 재료가 부족할 시 버튼 색깔 비활성화
     // 색깔이 활성화된 버튼을 누른경우 BAG로 아이템 생성
     
-    public void MakeAxeBtn()
+    public void MakeRockAxeBtn()
     {
         if(CheckIDAndCount(1,3) == true && CheckIDAndCount(2,1))
         {
             // 만든 아이템을 아이템 슬롯에 추가
             // 사용한 아이템을 아이템리스트에서 카운트 다운
-            UseMaterial(1,1);
+            UseMaterial(1,3);
             UseMaterial(2, 1);
+            AddCombineItem(11);
             Debug.Log("완성");
         }
         else
@@ -105,7 +115,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void MakeRockPickAxBtn()
+    {
 
+    }
+    public void MakeRopeBtn()
+    {
+
+    }
+    #endregion
+
+    #region CookingTab
 
     #endregion
 

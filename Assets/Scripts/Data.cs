@@ -45,14 +45,6 @@ public class Data : MonoBehaviour
         }
     } // 아이템 데이터 Json파일을 로드
 
-    void SearchItemID(int _dropItemID) // 아이템 아이디를 통해서 어떤 아이템인지 검색
-    {
-        foreach(var itemID in _itemTable._itemTable)
-        {
-               
-        }
-    }
-
 }
 
 

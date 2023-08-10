@@ -22,9 +22,9 @@ public class Slot : MonoBehaviour
         set { _itemCount = value; }
     }
 
-    public void Init(ItemData data, Sprite spr)
+    public void Init(int itemID, Sprite spr)
     {
-        _itemID = data._itemID;
+        _itemID = itemID;
         _itmeImage.sprite = spr;
         SlotUpdate(1);
     }
@@ -33,5 +33,9 @@ public class Slot : MonoBehaviour
     {
         _itemCount += count;
         _countText.text = _itemCount.ToString();
+        if(_itemCount <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
