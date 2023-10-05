@@ -9,14 +9,12 @@ public class Item : MonoBehaviour
 
     private void Start()
     {
-        _itemData = new ItemData( 1);
+        _itemData = new ItemData(itemID);
         _itemData._itemID = itemID;
     }
 
     public ItemData GetItem()
     {
-        Debug.Log(_itemData._itemID);
-        Debug.Log(_itemData._itemType);
         Destroy(gameObject);
         return _itemData; 
     }

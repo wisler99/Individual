@@ -6,24 +6,19 @@ using UnityEngine.UI;
 public class MakingTab : MonoBehaviour
 {
     [SerializeField] GameObject[] _Tools;
+    [SerializeField] Inventory _inventory;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            for (int i = 0; i < _Tools.Length; i++)
-            {
-                _Tools[i].SetActive(true);
-            }
+            _inventory.MakingBtnActive();
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            for (int i = 0; i < _Tools.Length; i++)
-            {
-                _Tools[i].SetActive(false);
-            }
+            _inventory.AllBtnDisable();
         }
     }
 }
