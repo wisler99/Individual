@@ -5,12 +5,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     bool _isGameScene;
+    
+    
+
     public bool isGameScene
     {
         get { return _isGameScene; }
         set { _isGameScene = value; }
     }
-
 
     #region 싱글턴
     private static GameManager instance = null;
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
         }
     }
     #region 월드 타이머
+
     int _dayCount = 1;
     float _timer = 0;
     float _time = 300;
