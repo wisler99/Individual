@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class Data : MonoBehaviour
 {
@@ -11,33 +11,26 @@ public class Data : MonoBehaviour
 
     ItemDataTable _itemTable;
 
+    AsyncOperation _asyncOperation;
+
     private void Awake()
     {
         if (null == instance)
         {
             instance = this;
-
-            //씬 전환이 되더라도 파괴되지 않게 한다.
             DontDestroyOnLoad(this.gameObject);
         }
         else
         {
-            //만약 씬 이동이 되었는데 그 씬에도 Hierarchy에 GameMgr이 존재할 수도 있다.
-            //그럴 경우엔 이전 씬에서 사용하던 인스턴스를 계속 사용해주는 경우가 많은 것 같다.
-            //그래서 이미 전역변수인 instance에 인스턴스가 존재한다면 자신을 삭제해준다.
             Destroy(this.gameObject);
         }
-
     }
     private void Start()
     {
         _itemTable = new ItemDataTable();
         _itemTable._itemTable = new List<ItemData>();
-        RoadItemTable();
-    }
-    void Update()
-    {
 
+        StartCoroutine(LoadGame());
     }
 
     public static Data Instance
@@ -50,6 +43,34 @@ public class Data : MonoBehaviour
             }
             return instance;
         }
+    }
+    #region 데이터 로드
+    public event EventHandler LoadingEnd;
+    public IEnumerator LoadGame()
+    {
+        RoadItemTable();
+        yield return null;
+
+        // 마지막에 필요한 모든 게임데이터를 로드가되면 gmaeScene로드
+        _asyncOperation = SceneManager.LoadSceneAsync("GameScene");
+        _asyncOperation.allowSceneActivation = false;
+
+        while (true)
+        {
+            if (_asyncOperation.progress >= 0.9f)
+            {
+                yield return new WaitForSeconds(3f);
+                LoadingEnd?.Invoke(this, EventArgs.Empty);
+                break;
+            }
+            yield return null;
+        }
+    }
+    public void SceneChange()
+    {
+        StopCoroutine(LoadGame());
+        _asyncOperation.allowSceneActivation = true;
+        GameManager.Instance.isGameScene = true;
     }
 
     void RoadItemTable()
@@ -75,6 +96,8 @@ public class Data : MonoBehaviour
             Debug.Log("파일이 없습니다.");
         }
     } // 아이템 데이터 Json파일을 로드
+
+    #endregion
 
     public ItemType SearchType(int _itemID)
     {

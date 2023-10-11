@@ -33,7 +33,6 @@ public class GameUI : MonoBehaviour
             {
                 _slots[i].transform.Find("Image").GetComponent<Image>().sprite = _equipmentSlots[i].itemIcon;
                 _slots[i].transform.Find("Image").gameObject.SetActive(true);
-                Debug.Log("aaa");
             }
         }
     }

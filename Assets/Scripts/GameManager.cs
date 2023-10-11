@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    bool _isGameScene;
+    public bool isGameScene
+    {
+        get { return _isGameScene; }
+        set { _isGameScene = value; }
+    }
+
+
     #region 싱글턴
     private static GameManager instance = null;
     private void Awake()
@@ -17,7 +25,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
+        _isGameScene = false;
     }
     public static GameManager Instance
     {
@@ -34,8 +42,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        DayTimer();
-        DisPlayerLife();
+        if (_isGameScene)
+        {
+            DayTimer();
+            DisPlayerLife();
+        }
     }
     #region 월드 타이머
     int _dayCount = 1;
