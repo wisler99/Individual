@@ -41,13 +41,7 @@ public class UIManager : MonoBehaviour
         _inventory.Init();
         _gamePlayUI.Init();
     }
-
-    private void Update()
-    {
-        if (_inventory.gameObject.activeSelf) _gamePlayUI.gameObject.SetActive(false);
-        else _gamePlayUI.gameObject.SetActive(true);
-    }
-
+    #region GamePlayUI
     public void TimeBarUpdate(float timer, int dayCount)
     {
         _gamePlayUI.TimeBarUpdate(timer, dayCount);
@@ -61,4 +55,21 @@ public class UIManager : MonoBehaviour
     {
         _gamePlayUI.ThirstBarUpdate(thirstValue);
     }
+    #endregion
+
+    #region Inventory
+    public void InventoryOpen()
+    {
+        _inventory.InventoryOpen();
+    }
+    public void InventoryClose()
+    {
+        _inventory.InventoryClose();
+    }
+
+    public void AddItem(ItemData addItem)
+    {
+        _inventory.AddItem(addItem);
+    }
+    #endregion
 }

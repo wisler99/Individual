@@ -9,6 +9,8 @@ public class EquipmentSlot : MonoBehaviour
     [SerializeField] GameObject _itemImage;
     [SerializeField] GameUI _gameUI;
 
+    bool _isActive;
+
     int _itemID;
     public int itemID
     {
@@ -34,12 +36,22 @@ public class EquipmentSlot : MonoBehaviour
             _itemIcon = value;
         }
     }
+    private void Start()
+    {
+        _isActive = false;
+    }
+    private void Update()
+    {
+        if (_isActive) _itemImage.gameObject.SetActive(true);
+        else _itemImage.gameObject.SetActive(false);
+    }
 
     public void Drop(BaseEventData data)
     {
         DragSlot ds = DragSlot.Instance;
         if(ds.ItemType == ItemType.tool)
         {
+            _isActive = true;
             _itemImage.GetComponent<Image>().sprite = ds.gameObject.GetComponent<Image>().sprite;
             _itemIcon = ds.gameObject.GetComponent<Image>().sprite;
             _itemID = ds.ItemID;

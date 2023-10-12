@@ -20,6 +20,9 @@ public class PlayerControl : MonoBehaviour
     float mouseY = 0;
 
     float _hungryValue = 100;
+
+    bool _isInventory;
+
     public float hungryValue
     {
         get { return _hungryValue; }
@@ -71,15 +74,32 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        _isInventory = false;
     }
     private void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            _inventory.GetComponent<Inventory>().InventoryOpen();
+            if (_isInventory)
+            {
+                UIManager.Instance.InventoryClose();
+                _isInventory = false;
+            }
+            else 
+            {
+                UIManager.Instance.InventoryOpen();
+                _isInventory = true;
+            }
         }
-        if (_inventory.activeSelf == true) return;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_isInventory)
+            {
+                UIManager.Instance.InventoryClose();
+                _isInventory = false;
+            }
+        }
         Move();
         Jump();
         CheckItem();
@@ -135,7 +155,7 @@ public class PlayerControl : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     //인벤토리에 넣는 함수
-                    _inventory.GetComponent<Inventory>().AddItem(hit.transform.GetComponent<Item>().GetItem());
+                    UIManager.Instance.AddItem(hit.transform.GetComponent<Item>().GetItem());
                 }
             }
         }

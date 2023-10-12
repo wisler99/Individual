@@ -14,23 +14,33 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] Button[] _makingBtns;
     [SerializeField] Button[] _cookingBtns;
+
+    [SerializeField] GameObject _inventory;
+
+    bool _isActive;
+    public bool isActive
+    {
+        get { return _isActive; }
+        set { _isActive = value; }
+    }
     
-
-
     public void Init()
     {
-        gameObject.SetActive(false);
+        _inventory.SetActive(false);
         AllBtnDisable();
         CheckCombine();
+        _isActive = false;
     }
     
     public void InventoryOpen()
     {
-        if (gameObject.activeSelf == false) gameObject.SetActive(true);
-        else
-        {
-            gameObject.SetActive(false);
-        }
+        _isActive = true;
+        _inventory.SetActive(true);
+    }
+    public void InventoryClose()
+    {
+        _isActive = false;
+        _inventory.SetActive(false);
     }
     public void InventoryUpdate()
     {

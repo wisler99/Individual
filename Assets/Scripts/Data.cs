@@ -13,6 +13,12 @@ public class Data : MonoBehaviour
 
     AsyncOperation _asyncOperation;
 
+    bool _sliderEnd = false;
+    public bool sliderEnd
+    {
+        get { return _sliderEnd; }
+        set { _sliderEnd = value; }
+    }
     private void Awake()
     {
         if (null == instance)
@@ -59,9 +65,11 @@ public class Data : MonoBehaviour
         {
             if (_asyncOperation.progress >= 0.9f)
             {
-                yield return new WaitForSeconds(3f);
-                LoadingEnd?.Invoke(this, EventArgs.Empty);
-                break;
+                if (_sliderEnd)
+                {
+                    LoadingEnd?.Invoke(this, EventArgs.Empty);
+                    break;
+                }
             }
             yield return null;
         }

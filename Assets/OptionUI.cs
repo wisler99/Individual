@@ -17,6 +17,7 @@ public class OptionUI : MonoBehaviour
     public void SoundSliderOnValue(float value)
     {
         _sliderSound.value = value;
+        GameManager.Instance.SoundVolumControll(value);
     }
     public void SoundToggleOnValue(bool _bool)
     {

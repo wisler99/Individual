@@ -9,8 +9,6 @@ public class LoadingUI : MonoBehaviour
     [SerializeField] OptionUI _optionUI;
     bool _isLoading;
 
-    string _nextScene;
-
     private void Start()
     {
         gameObject.SetActive(true);
@@ -25,6 +23,10 @@ public class LoadingUI : MonoBehaviour
         }
         _optionUI.Init();
     }
+    private void Update()
+    {
+        LoadingBar();
+    }
 
     void LoadingEnd(object sender, EventArgs s)
     {
@@ -37,6 +39,14 @@ public class LoadingUI : MonoBehaviour
         for (int i = 0; i < _ButtonLoading.Length; i++)
         {
             _ButtonLoading[i].gameObject.SetActive(true);
+        }
+    }
+    void LoadingBar()
+    {
+        _sliderLoading.value += Time.deltaTime * 0.2f;
+        if(_sliderLoading.value == 1)
+        {
+            Data.Instance.sliderEnd = true;
         }
     }
 

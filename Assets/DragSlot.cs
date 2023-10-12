@@ -26,11 +26,11 @@ public class DragSlot : MonoBehaviour
     }
 
 
-    public void setItemData(int itemID,Image _itemImage)
+    public void setItemData(int itemId, Image _itemImage)
     {
         gameObject.GetComponent<Image>().sprite = _itemImage.sprite;
-        _itemID = itemID;
-        ItemType = Data.Instance.SearchType(itemID);
+        ItemID = itemId;
+        ItemType = Data.Instance.SearchType(itemId);
     }
 
 }

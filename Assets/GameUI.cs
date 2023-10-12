@@ -13,16 +13,15 @@ public class GameUI : MonoBehaviour
     [SerializeField] GameObject _timerBar;
 
     [SerializeField] Text _dayText;
-    // 인벤토리 장착 슬롯에 있는 정보 가져와서 넣기
-
-
-    // 인벤토리에서 아이템이 장착됐을때 실행
+    [SerializeField] GameObject _gameUI;
 
     public void Init()
     {
-        gameObject.SetActive(true);
+        _gameUI.SetActive(true);
         UpdateSlot();
         InitBar();
+        EquimentSlotDisable();
+
     }
     public void UpdateSlot()
     {
