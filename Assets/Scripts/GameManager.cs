@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     #region 월드 타이머
 
     int _dayCount = 1;
-    float _time = 300;
+    float _time = 100;
     float _timer = 0;
     public float timer
     {
@@ -74,15 +74,14 @@ public class GameManager : MonoBehaviour
     public void DayTimer()
     {
         timer += Time.deltaTime;
-        Debug.Log(timer);
         if (UIManager.Instance != null) UIManager.Instance.TimeBarUpdate((int)_timer / _time, _dayCount);
         if ((int)_timer / _time > 1)
         {
             timer = 0;
             _dayCount++;
         }
-        if (timer == 0) isMorning = true;
-        if (timer == 150) isMorning = false;
+        if(timer >= 70f) isMorning = false;
+        else if(timer <= 0f) isMorning = true;
     }
     #endregion
 
