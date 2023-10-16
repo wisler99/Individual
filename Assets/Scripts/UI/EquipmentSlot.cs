@@ -55,8 +55,8 @@ public class EquipmentSlot : MonoBehaviour
             _itemImage.GetComponent<Image>().sprite = ds.gameObject.GetComponent<Image>().sprite;
             _itemIcon = ds.gameObject.GetComponent<Image>().sprite;
             _itemID = ds.ItemID;
-            _gameUI.UpdateSlot();
             _itemImage.SetActive(true);
+            _gameUI.UpdateSlot();
             return;
         }
         Debug.Log("장비 아이템만 장착 가능합니다.");

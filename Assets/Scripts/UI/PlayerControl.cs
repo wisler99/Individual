@@ -22,7 +22,16 @@ public class PlayerControl : MonoBehaviour
     float _hungryValue = 100;
 
     bool _isInventory;
-
+    int _selectSlotIndex;
+    public int selectSlotIndex
+    {
+        get { return _selectSlotIndex; }
+        set
+        {
+            _selectSlotIndex = value;
+            UIManager.Instance.SelectSlot(selectSlotIndex);
+        }
+    }
     public float hungryValue
     {
         get { return _hungryValue; }
@@ -42,6 +51,12 @@ public class PlayerControl : MonoBehaviour
             UIManager.Instance.ThirstUpdate(_thirstValue);
         }
     }
+    int _playerEquipmentItem;
+    public int playerEquipmentItem
+    {
+        get { return _playerEquipmentItem; }
+        set { _playerEquipmentItem = value; }
+    }
 
     #region 싱글턴
     private static PlayerControl instance = null;
@@ -56,7 +71,6 @@ public class PlayerControl : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
     }
     public static PlayerControl Instance
     {
@@ -75,7 +89,9 @@ public class PlayerControl : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         _isInventory = false;
+        selectSlotIndex = 0;
     }
+
     private void Update()
     {
 
@@ -100,11 +116,45 @@ public class PlayerControl : MonoBehaviour
                 _isInventory = false;
             }
         }
+        if (Input.GetMouseButtonDown(0)) PlayerAttack();
         Move();
         Jump();
         CheckItem();
 
+        if (Input.GetKeyDown(KeyCode.Alpha1)) selectSlotIndex = 0;
+        if (Input.GetKeyDown(KeyCode.Alpha2)) selectSlotIndex = 1;
+        if (Input.GetKeyDown(KeyCode.Alpha3)) selectSlotIndex = 2;
+        if (Input.GetKeyDown(KeyCode.Alpha4)) selectSlotIndex = 3;
+        if (Input.GetKeyDown(KeyCode.Alpha5)) selectSlotIndex = 4;
+
     }
+    #region 플레이어 공격
+
+    void PlayerAttack()
+    {
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, transform.forward, Color.red, 5f);
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 3))
+        {
+            if (hit.transform.tag == "Tree")
+            {
+
+            }
+            if(hit.transform.tag == "Rock")
+            {
+
+            }
+            if(hit.transform.tag == "Grass")
+            {
+
+            }
+        }
+    }
+
+    
+
+    #endregion
+
     #region 플레이어 움직임
 
     public void SetCamera(Transform cam)

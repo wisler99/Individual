@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class GameUI : MonoBehaviour
 {
     [SerializeField] EquipmentSlot[] _equipmentSlots;
     [SerializeField] GameObject[] _slots;
+    [SerializeField] Transform _selectSlot;
 
     [SerializeField] GameObject _hungryBar;
     [SerializeField] GameObject _thirstBar;
@@ -21,8 +23,10 @@ public class GameUI : MonoBehaviour
         UpdateSlot();
         InitBar();
         EquimentSlotDisable();
-
+        _selectSlot.gameObject.SetActive(true);
     }
+
+    #region ¿Â¬¯ æ∆¿Ã≈€ ΩΩ∑‘
     public void UpdateSlot()
     {
         EquimentSlotDisable();
@@ -43,6 +47,13 @@ public class GameUI : MonoBehaviour
             _slots[i].transform.Find("Image").gameObject.SetActive(false);
         }
     }
+    public void HandlerItem(int index)
+    {
+        _selectSlot.SetParent(_slots[index].transform);
+        _selectSlot.transform.localPosition = Vector3.zero;
+        PlayerControl.Instance.selectSlotIndex = _equipmentSlots[index].itemID;
+    }
+    #endregion
 
     void InitBar()
     {

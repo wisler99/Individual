@@ -25,7 +25,6 @@ public class DragSlot : MonoBehaviour
         Instance = this;
     }
 
-
     public void setItemData(int itemId, Image _itemImage)
     {
         gameObject.GetComponent<Image>().sprite = _itemImage.sprite;

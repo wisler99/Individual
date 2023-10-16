@@ -55,6 +55,10 @@ public class UIManager : MonoBehaviour
     {
         _gamePlayUI.ThirstBarUpdate(thirstValue);
     }
+    public void SelectSlot(int index)
+    {
+        _gamePlayUI.HandlerItem(index);
+    }
     #endregion
 
     #region Inventory
